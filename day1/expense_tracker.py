@@ -1,54 +1,60 @@
+import csv
 expenses = []
 
 
 def add_expense():
-    expense = {}
-    expense['Name'] = input("Enter name of expense: ")
-    expense['Cost'] = float(input("Enter cost of expense: "))
-    expense['Category'] = input("Enter category of expense: ")
-    expenses.append(expense)
+    with open('expense_tracker.csv', 'a', newline='') as expense_file:
+        fnames = ['Name', 'Cost', 'Category']
+        expense_write = csv.DictWriter(expense_file, fieldnames=fnames)
+
+        expense = {}
+        expense['Name'] = input("Enter name of expense: ")
+        expense['Cost'] = float(input("Enter cost of expense: "))
+        expense['Category'] = input("Enter category of expense: ")
+        expense_write.writerow(expense)
 
 
 def view_expenses():
-    if not expenses:
-        print("No expenses added yet.")
-        return
+    with open('expense_tracker.csv', 'r') as expense_file:
+        expense_reader = csv.DictReader(expense_file)
 
-    for spendings in expenses:
-        for key, value in spendings.items():
-            print(key + ': ', value)
-
-        print("\n")
+        for line in expense_reader:
+            print(line)
 
 
 def total_spendings():
     total = 0
-    if not expenses:
-        print("No expenses added yet.")
-        return
-    for spendings in expenses:
-        total = total + spendings['Cost']
+    with open('expense_tracker.csv', 'r') as expense_file:
+        expense_reader = csv.DictReader(expense_file)
 
-    print("Total spendings: ", total)
+        for line in expense_reader:
+            total = total + float(line['Cost'])
+
+        print(total)
 
 
 def category_total():
     total = 0
-    if not expenses:
-        print("No expenses added yet.")
-        return
     categ = input("Which category? ")
 
-    for spendings in expenses:
-        if (spendings['Category'] == categ):
-            total = total + spendings['Cost']
+    with open('expense_tracker.csv', 'r') as expense_file:
+        expense_reader = csv.DictReader(expense_file)
+        for spendings in expense_reader:
+            if (spendings['Category'] == categ):
+                total = total + float(spendings['Cost'])
 
     print("Total in Category " + ": ", categ, total)
 
 
 while True:
     print("1. Add Expense\n2. View Expenses\n3. Total Spendings\n4. Category Wise Spending\n5. Exit")
-    task = int(input("Enter task number: "))
+
+    try:
+        task = int(input("Enter task number: "))
+
+    except:
+        print("Invalid input!")
+        continue
 
     if (task == 1):
         add_expense()
