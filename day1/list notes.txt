@@ -1,0 +1,32 @@
+modifying lists:
+    append - list.append('value')
+    extend - list.extend (another_list)
+    insert - list.insert(0, 'value')
+    remove
+    reverse
+    
+sorting:
+    sort
+    sorted(course) - doesnt sort the list in place, returns the sorted version of the list which we can store in a new variable
+    max. min. sum. 
+
+finding values:
+    list.index('value')
+
+print('value' in list) = true or false
+
+for index, item in enumerate (list, start = 1):
+    print(index, item)
+
+lisst -> string:
+    list_str = ', '.join(list)
+
+string -> list:
+    newlist = list_str.split(', ')
+    
+-----------------------------------------------------------------------------
+
+tuples - unmutable, use ()
+sets  - do not care about order, removes duplicates, mainly used to check whether 
+        value exists in it or not and to remove duplicates. basically uses are similar to 
+        uses of sets in math. union, intersection, etc.
