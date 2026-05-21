@@ -1,5 +1,4 @@
 import csv
-expenses = []
 
 
 def add_expense():
@@ -19,7 +18,9 @@ def view_expenses():
         expense_reader = csv.DictReader(expense_file)
 
         for line in expense_reader:
-            print(line)
+            for key, value in line.items():
+                print(key + ': ', value)
+            print("\n")
 
 
 def total_spendings():
@@ -52,7 +53,7 @@ while True:
     try:
         task = int(input("Enter task number: "))
 
-    except:
+    except ValueError:
         print("Invalid input!")
         continue
 
